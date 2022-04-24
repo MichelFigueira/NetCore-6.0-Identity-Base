@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using UserApi.Data.Dtos;
+using UserApi.Data.Requests;
 using UserApi.Services;
 
 namespace UserApi.Controllers
@@ -24,7 +25,18 @@ namespace UserApi.Controllers
             if (result.IsFailed) 
                 return StatusCode(500);
 
-            return Ok();
+            return Ok(result.Successes.FirstOrDefault());
+        }
+
+        [HttpGet("/confirmEmail")]
+        public IActionResult confirmEmail([FromQuery] ConfirmEmailRequest request)
+        {
+            Result result = _registerService.ConfirmUser(request);
+
+            if (result.IsFailed)
+                return StatusCode(500);
+
+            return Ok(result.Successes.FirstOrDefault());
         }
     }
 }
