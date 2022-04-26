@@ -9,11 +9,12 @@ builder.Services.AddDbContext<UserDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection"))
 );
 
-builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
-                    opt => opt.SignIn.RequireConfirmedEmail = true
-                )
-                .AddEntityFrameworkStores<UserDbContext>()
-                .AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(opt => {
+        opt.SignIn.RequireConfirmedEmail = true;
+        opt.User.RequireUniqueEmail = true;
+    })
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<RegisterService, RegisterService>();
 builder.Services.AddScoped<LoginService, LoginService>();

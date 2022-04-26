@@ -28,7 +28,7 @@ namespace UserApi.Controllers
             return Ok(result.Successes.FirstOrDefault());
         }
 
-        [HttpGet("/confirmEmail")]
+        [HttpGet("/confirm-email")]
         public IActionResult confirmEmail([FromQuery] ConfirmEmailRequest request)
         {
             Result result = _registerService.ConfirmUser(request);

@@ -36,5 +36,44 @@ namespace UserApi.Services
             return Result.Fail("Login Error");
 
         }
+
+        public Result ResetPassword(ResetPasswordRequest request)
+        {
+            IdentityUser<int> identityUser = RecoverUserByEmail(request.Email);
+
+            if (identityUser != null)
+            {
+                string codeReset = _signInManager
+                    .UserManager.GeneratePasswordResetTokenAsync(identityUser).Result;
+
+                return Result.Ok().WithSuccess(codeReset);
+            }
+
+            return Result.Fail("Reset Email Failed");
+
+        }
+
+        public Result ConfirmResetPassword(ConfirmResetPasswordRequest request)
+        {
+            IdentityUser<int> identityUser = RecoverUserByEmail(request.Email);
+
+            IdentityResult identityResult = _signInManager
+                .UserManager.ResetPasswordAsync(identityUser, request.Token, request.Password)
+                .Result;
+
+            if (identityResult.Succeeded)
+                return Result.Ok().WithSuccess("Password reset successfully");
+
+            return Result.Fail("Error");
+
+        }
+
+        private IdentityUser<int> RecoverUserByEmail(string email)
+        {
+            return _signInManager
+                        .UserManager
+                        .Users
+                        .FirstOrDefault(u => u.NormalizedEmail == email.ToUpper());
+        }
     }
 }

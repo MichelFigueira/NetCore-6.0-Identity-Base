@@ -13,7 +13,7 @@ namespace UserApi.Models
             Recipients = new List<MailboxAddress>();
             Recipients.AddRange(recipient.Select(r => new MailboxAddress("", r)));
             Subject = subject;
-            Body = $"https://localhost:7208/confirmEmail?UserId={userId}&ConfirmationToken={token}";
+            Body = $"https://localhost:7208/confirm-email?UserId={userId}&ConfirmationToken={token}";
         }
     }
 }
