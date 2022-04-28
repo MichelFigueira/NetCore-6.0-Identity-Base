@@ -11,10 +11,10 @@ namespace UserApi.Services
     public class RegisterService
     {
         private IMapper _mapper;
-        private UserManager<IdentityUser<int>> _userManager;
+        private UserManager<CustomIdentityUser> _userManager;
         private EmailService _mailService;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService mailService)
+        public RegisterService(IMapper mapper, UserManager<CustomIdentityUser> userManager, EmailService mailService)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -24,7 +24,7 @@ namespace UserApi.Services
         public Result CreateUser(CreateUserDto createDto)
         {
             User user = _mapper.Map<User>(createDto);
-            IdentityUser<int> userIdentity = _mapper.Map<IdentityUser<int>>(user);
+            CustomIdentityUser userIdentity = _mapper.Map<CustomIdentityUser>(user);
 
             Task<IdentityResult> resultIdentity = _userManager.CreateAsync(userIdentity, createDto.Password);
 

@@ -7,10 +7,10 @@ namespace UserApi.Services
 {
     public class LoginService
     {
-        private SignInManager<IdentityUser<int>> _signInManager;
+        private SignInManager<CustomIdentityUser> _signInManager;
         private TokenService _tokenService;
 
-        public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService)
+        public LoginService(SignInManager<CustomIdentityUser> signInManager, TokenService tokenService)
         {
             _signInManager = signInManager;
             _tokenService = tokenService;
@@ -41,7 +41,7 @@ namespace UserApi.Services
 
         public Result ResetPassword(ResetPasswordRequest request)
         {
-            IdentityUser<int> identityUser = RecoverUserByEmail(request.Email);
+            CustomIdentityUser identityUser = RecoverUserByEmail(request.Email);
 
             if (identityUser != null)
             {
@@ -57,7 +57,7 @@ namespace UserApi.Services
 
         public Result ConfirmResetPassword(ConfirmResetPasswordRequest request)
         {
-            IdentityUser<int> identityUser = RecoverUserByEmail(request.Email);
+            CustomIdentityUser identityUser = RecoverUserByEmail(request.Email);
 
             IdentityResult identityResult = _signInManager
                 .UserManager.ResetPasswordAsync(identityUser, request.Token, request.Password)
@@ -70,7 +70,7 @@ namespace UserApi.Services
 
         }
 
-        private IdentityUser<int> RecoverUserByEmail(string email)
+        private CustomIdentityUser RecoverUserByEmail(string email)
         {
             return _signInManager
                         .UserManager

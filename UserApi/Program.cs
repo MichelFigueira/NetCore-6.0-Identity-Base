@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UserApi.Data;
+using UserApi.Models;
 using UserApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.AddDbContext<UserDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection"))
 );
 
-builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(opt => {
+builder.Services.AddIdentity<CustomIdentityUser, IdentityRole<int>>(opt => {
         opt.SignIn.RequireConfirmedEmail = true;
         opt.User.RequireUniqueEmail = true;
     })

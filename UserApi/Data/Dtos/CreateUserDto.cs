@@ -14,6 +14,8 @@ namespace UserApi.Data.Dtos
         [Required]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public DateTime DateOfBirth { get; set; }
 
     }
 }
