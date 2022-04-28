@@ -13,12 +13,14 @@ namespace UserApi.Services
         private IMapper _mapper;
         private UserManager<IdentityUser<int>> _userManager;
         private EmailService _mailService;
+        private RoleManager<IdentityRole<int>> _roleManager;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService mailService)
+        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService mailService, RoleManager<IdentityRole<int>> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _mailService = mailService;
+            _roleManager = roleManager;
         }
 
         public Result CreateUser(CreateUserDto createDto)
@@ -27,6 +29,8 @@ namespace UserApi.Services
             IdentityUser<int> userIdentity = _mapper.Map<IdentityUser<int>>(user);
 
             Task<IdentityResult> resultIdentity = _userManager.CreateAsync(userIdentity, createDto.Password);
+
+            _userManager.AddToRoleAsync(userIdentity, "regular");
 
             if (resultIdentity.Result.Succeeded) 
             { 
