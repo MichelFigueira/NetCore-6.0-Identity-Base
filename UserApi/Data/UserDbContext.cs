@@ -34,11 +34,11 @@ namespace UserApi.Data
 
             builder.Entity<IdentityUser<int>>().HasData(admin);
 
-            builder.Entity<IdentityUser<int>>().HasData(
+            builder.Entity<IdentityRole<int>>().HasData(
                 new IdentityRole<int> { Id = 1, Name = "admin", NormalizedName = "ADMIN" }
             );
 
-            builder.Entity<IdentityUser<int>>().HasData(
+            builder.Entity<IdentityRole<int>>().HasData(
                 new IdentityRole<int> { Id = 2, Name = "regular", NormalizedName = "REGULAR" }
             );
 

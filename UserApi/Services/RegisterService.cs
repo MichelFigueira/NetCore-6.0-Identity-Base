@@ -13,14 +13,12 @@ namespace UserApi.Services
         private IMapper _mapper;
         private UserManager<IdentityUser<int>> _userManager;
         private EmailService _mailService;
-        private RoleManager<IdentityRole<int>> _roleManager;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService mailService, RoleManager<IdentityRole<int>> roleManager)
+        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService mailService)
         {
             _mapper = mapper;
             _userManager = userManager;
             _mailService = mailService;
-            _roleManager = roleManager;
         }
 
         public Result CreateUser(CreateUserDto createDto)
